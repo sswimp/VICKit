@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/sswimp/VICKit.git", :tag => s.version }
   s.source_files = "VICKit/**/*.{h,m}"
   s.requires_arc = true
-  s.dependency 'AFNetworking', '~> 3.0'
+  
 
 end
