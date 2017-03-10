@@ -120,7 +120,7 @@
             
             
         }else{
-            //FFBaseToastView
+            //WJBaseToastView
             WJBaseToastView *wjBaseToastView = [[WJBaseToastView alloc]initToastWithTitle:_titleString message:_messageString iconImage:_iconImage];
             
             
@@ -162,7 +162,7 @@
     if (_isCustomToastView == NO) {
         if (_toastPosition == WJToastPositionBottomWithFillet) {
             
-            //FFCentreToastView
+            //WJCentreToastView
             _wjCentreToastView = [[WJCentreToastView alloc]initToastWithTitle:_titleString message:_messageString iconImage:_iconImage];
             
             _wjCentreToastView.toastBackgroundColor = _toastBackgroundColor;
@@ -182,7 +182,7 @@
             
             
         }else{
-            //FFBaseToastView
+            //WJBaseToastView
             WJBaseToastView *wjBaseToastView = [[WJBaseToastView alloc]initToastWithTitle:_titleString message:_messageString iconImage:_iconImage];
             
             
@@ -208,7 +208,7 @@
         
     }else{
         //在屏幕中显示间自定义的View
-        //FFCentreToastView
+        //WJCentreToastView
         _wjCentreToastView = [[WJCentreToastView alloc]initCentreToastWithView:_customToastView];
         
         _wjCentreToastView.toastCornerRadius = _toastCornerRadius;
@@ -232,21 +232,30 @@
     
     //默认背景色
     if (_toastBackgroundColor == nil) {
-        
+        if( _toastPosition == WJToastPositionBottomWithFillet){
             self.toastBackgroundColor = [UIColor whiteColor];
             
-        
+        }else{
+            self.toastBackgroundColor = [UIColor darkGrayColor];
+            
+        }
     }
     //默认文字颜色
     if (_titleTextColor == nil) {
-        
+        if( _toastPosition == WJToastPositionBottomWithFillet){
+            //TextColor
             self.titleTextColor = [UIColor blackColor];
-        
+        }else{
+            self.titleTextColor = [UIColor whiteColor];
+        }
     }
     if (_messageTextColor == nil) {
-        
+        if( _toastPosition == WJToastPositionBottomWithFillet){
+            //TextColor
             self.messageTextColor = [UIColor blackColor];
-        
+        }else{
+            self.messageTextColor = [UIColor whiteColor];
+        }
     }
 }
 

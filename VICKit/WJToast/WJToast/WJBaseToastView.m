@@ -7,7 +7,7 @@
 //
 
 #import "WJBaseToastView.h"
-#define VERTICAL_SPACE 8.f
+#define VERTICAL_SPACE 3.f
 #define HORIZONTAL_SPACE 8.f
 #define BOTTOM_SPACE 80.f
 #define BOTTOM_HORIZONTAL_MAX_SPACE 20.f
@@ -36,7 +36,6 @@
 
 @end
 @implementation WJBaseToastView
-
 static NSMutableArray* toastArray = nil;
 
 
@@ -105,34 +104,34 @@ static NSMutableArray* toastArray = nil;
             self.toastBackgroundColor = [UIColor whiteColor];
             break;
         case WJToastTypeSuccess: {
-            self.toastBackgroundColor = [UIColor whiteColor];
-            //self.toastBackgroundColor = [UIColor colorWithRed:31.f/255.f green:177.f/255.f blue:138.f/255.f alpha:1.f];
+            //self.toastBackgroundColor = [UIColor whiteColor];
+            self.toastBackgroundColor = [UIColor colorWithRed:31.f/255.f green:177.f/255.f blue:138.f/255.f alpha:1.f];
             if (!_iconImage) {
-                self.iconImage = [UIImage imageWithName:@"fftoast_success_highlight"];
+                self.iconImage = [UIImage imageWithName:@"fftoast_success"];
             }
             break;
         }
         case WJToastTypeError: {
-            self.toastBackgroundColor = [UIColor whiteColor];
-            //self.toastBackgroundColor = [UIColor colorWithRed:255.f/255.f green:91.f/255.f blue:65.f/255.f alpha:1.f];
+            //self.toastBackgroundColor = [UIColor whiteColor];
+            self.toastBackgroundColor = [UIColor colorWithRed:255.f/255.f green:91.f/255.f blue:65.f/255.f alpha:1.f];
             if (!_iconImage) {
-                self.iconImage = [UIImage imageWithName:@"fftoast_error_highlight"];
+                self.iconImage = [UIImage imageWithName:@"fftoast_error"];
             }
             break;
         }
         case WJToastTypeWarning: {
-            self.toastBackgroundColor = [UIColor whiteColor];
-            //self.toastBackgroundColor = [UIColor colorWithRed:255.f/255.f green:134.f/255.f blue:0.f/255.f alpha:1.f];
+            //self.toastBackgroundColor = [UIColor whiteColor];
+            self.toastBackgroundColor = [UIColor colorWithRed:255.f/255.f green:134.f/255.f blue:0.f/255.f alpha:1.f];
             if (!_iconImage) {
-                self.iconImage = [UIImage imageWithName:@"fftoast_warning_highlight"];
+                self.iconImage = [UIImage imageWithName:@"fftoast_warning"];
             }
             break;
         }
         case WJToastTypeInfo: {
-            self.toastBackgroundColor = [UIColor whiteColor];
-            //self.toastBackgroundColor = [UIColor colorWithRed:75.f/255.f green:107.f/255.f blue:122.f/255.f alpha:1.f];
+            //self.toastBackgroundColor = [UIColor whiteColor];
+            self.toastBackgroundColor = [UIColor colorWithRed:75.f/255.f green:107.f/255.f blue:122.f/255.f alpha:1.f];
             if (!_iconImage) {
-                self.iconImage = [UIImage imageWithName:@"fftoast_info_highlight"];
+                self.iconImage = [UIImage imageWithName:@"fftoast_info"];
             }
             break;
         }
@@ -141,7 +140,7 @@ static NSMutableArray* toastArray = nil;
             break;
     }
     
-    self.iconImageSize = self.iconImage == nil?CGSizeZero:CGSizeMake(35.f, 35.f);
+    self.iconImageSize = self.iconImage == nil?CGSizeZero:CGSizeMake(30.f, 30.f);
     
     //上滑消失
     if (_toastPosition != WJToastPositionBottomWithFillet) {
@@ -204,8 +203,8 @@ static NSMutableArray* toastArray = nil;
         //有图标
         CGFloat toastViewHTemp = 0;
         CGFloat toastViewHTemp2 = self.iconImageSize.height + 2 * VERTICAL_SPACE;
-        if (self.titleString == nil) {
-            toastViewHTemp = self.messageLabelSize.height + 2 * VERTICAL_SPACE;
+        if (self.titleString==nil) {
+            toastViewHTemp = self.messageLabelSize.height+ 2 * VERTICAL_SPACE;
         }else{
             toastViewHTemp = self.titleLabelSize.height + self.messageLabelSize.height + 3 * VERTICAL_SPACE;
         }
@@ -215,7 +214,8 @@ static NSMutableArray* toastArray = nil;
     switch (self.toastPosition) {
         case WJToastPositionDefaule: {
             toastViewW = SCREEN_WIDTH;
-            toastViewH += STATUSBAR_HEIGHT;
+            toastViewH = toastViewH > 50? toastViewH:50;
+            
             break;
         }
         case WJToastPositionBelowStatusBarWithFillet: {
@@ -227,8 +227,8 @@ static NSMutableArray* toastArray = nil;
                 self.toastCornerRadius = 5.f;
             }
             self.layer.cornerRadius = _toastCornerRadius;
-            self.layer.borderWidth = 1.f;
-            self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//            self.layer.borderWidth = 1.f;
+//            self.layer.borderColor = [UIColor lightGrayColor].CGColor;
             self.layer.masksToBounds = YES;
             
             break;
@@ -273,12 +273,11 @@ static NSMutableArray* toastArray = nil;
     [super layoutSubviews];
     
     CGFloat tempStatusBarHeight = 0;
-    if (self.toastPosition == WJToastPositionDefaule) {
-        tempStatusBarHeight = STATUSBAR_HEIGHT;
-        UIView *lineView = [[UIView alloc] initWithFrame:(CGRectMake(0, _toastViewFrame.size.height-1, _toastViewFrame.size.width, 1))];
-        lineView.backgroundColor = [UIColor lightGrayColor];
-        [self addSubview:lineView];
-    }
+//    if (self.toastPosition == WJToastPositionDefaule) {
+//        UIView *lineView = [[UIView alloc] initWithFrame:(CGRectMake(0, _toastViewFrame.size.height-1, _toastViewFrame.size.width, 1))];
+//        lineView.backgroundColor = [UIColor lightGrayColor];
+//        [self addSubview:lineView];
+//    }
     
     CGFloat iconImageViewX = HORIZONTAL_SPACE;
     CGFloat iconImageViewY = (_toastViewFrame.size.height - self.iconImageSize.width - tempStatusBarHeight)/2 + tempStatusBarHeight;
@@ -294,7 +293,7 @@ static NSMutableArray* toastArray = nil;
     
     CGFloat messageLabelX = titleLabelX;
     CGFloat messageLabelY = 0;
-    if (self.titleString == nil) {
+    if (self.titleString ==nil) {
         messageLabelY = (self.toastViewFrame.size.height - self.messageLabelSize.height - tempStatusBarHeight)/2 + tempStatusBarHeight;
     }else{
         messageLabelY = titleLabelY + titleLabelH + VERTICAL_SPACE;
@@ -338,6 +337,7 @@ static NSMutableArray* toastArray = nil;
     @synchronized (toastArray) {
         
         UIWindow *windowView = [UIApplication sharedApplication].keyWindow;
+        windowView.windowLevel = UIWindowLevelStatusBar+1;
         [windowView addSubview:self];
         
         [UIView animateWithDuration:0.5f

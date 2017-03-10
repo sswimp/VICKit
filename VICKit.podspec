@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "VICKit"
-  s.version      = "0.1.2"
+  s.version      = "0.1.3"
   s.summary      = "VICKit."
   s.homepage     = "https://github.com/sswimp/VICKit"
   s.license      = "MIT"
