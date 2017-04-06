@@ -337,10 +337,10 @@ static NSMutableArray* toastArray = nil;
     @synchronized (toastArray) {
         
         UIWindow *windowView = [UIApplication sharedApplication].keyWindow;
-        windowView.windowLevel = UIWindowLevelStatusBar+1;
+        windowView.windowLevel = UIWindowLevelStatusBar;
         [windowView addSubview:self];
         
-        [UIView animateWithDuration:0.5f
+        [UIView animateWithDuration:1.f
                               delay:0.f
              usingSpringWithDamping:0.7f
               initialSpringVelocity:0.5f
@@ -349,7 +349,7 @@ static NSMutableArray* toastArray = nil;
                              self.frame = _toastViewFrame;
                              self.alpha = _toastAlpha;
                          } completion:^(BOOL finished) {
-                             
+                             windowView.windowLevel = UIWindowLevelStatusBar - 1;
                          }];
         
         [toastArray addObject:self];
