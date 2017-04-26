@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "VICKit"
-  s.version      = "0.1.8"
+  s.version      = "0.1.9"
   s.summary      = "VICKit."
   s.homepage     = "https://github.com/sswimp/VICKit"
   s.license      = "MIT"
@@ -11,6 +11,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/sswimp/VICKit.git", :tag => s.version }
   s.source_files = "VICKit/**/*.{h,m}"
   s.requires_arc = true
-  s.dependency 'AFNetworking', '~> 3.0'
 
 end
