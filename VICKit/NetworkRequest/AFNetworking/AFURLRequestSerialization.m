@@ -186,7 +186,11 @@ static void *AFHTTPRequestSerializerObserverContext = &AFHTTPRequestSerializerOb
 @interface AFHTTPRequestSerializer ()
 @property (readwrite, nonatomic, strong) NSMutableSet *mutableObservedChangedKeyPaths;
 @property (readwrite, nonatomic, strong) NSMutableDictionary *mutableHTTPRequestHeaders;
+#if OS_OBJECT_USE_OBJC
 @property (readwrite, nonatomic, strong) dispatch_queue_t requestHeaderModificationQueue;
+#else
+@property (readwrite, nonatomic, assign) dispatch_queue_t requestHeaderModificationQueue;
+#endif
 @property (readwrite, nonatomic, assign) AFHTTPRequestQueryStringSerializationStyle queryStringSerializationStyle;
 @property (readwrite, nonatomic, copy) AFQueryStringSerializationBlock queryStringSerialization;
 @end
