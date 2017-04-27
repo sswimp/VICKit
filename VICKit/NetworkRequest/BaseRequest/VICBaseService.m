@@ -85,7 +85,7 @@
         
     }
 
-    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[VICURLFactory relativeBaseURL]];
+    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[[VICURLFactory shardFactoryHandle] relativeBaseURL]];
     [manager restApi:api parameters:params success:^(NSDictionary *responseDic) {
         NSInteger code = [[responseDic valueForKey:@"returnCode"] integerValue];
         if (code == 0) {    // 成功
@@ -110,7 +110,7 @@
             }
             
             if (errorBlock) {
-                NSError *error = [NSError errorWithDomain:[[VICURLFactory relativeBaseURL] absoluteString] code:code userInfo:@{NSLocalizedDescriptionKey:[responseDic valueForKey:@"result"]}];
+                NSError *error = [NSError errorWithDomain:[[[VICURLFactory shardFactoryHandle] relativeBaseURL] absoluteString] code:code userInfo:@{NSLocalizedDescriptionKey:[responseDic valueForKey:@"result"]}];
                 errorBlock(error);
             }
         }
@@ -174,7 +174,7 @@
     // 文件完整路径
     NSString *fullPath = [filePath stringByAppendingPathComponent:fileName];
 
-    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[VICURLFactory relativeBaseURL]];
+    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[[VICURLFactory shardFactoryHandle] relativeBaseURL]];
     [manager downloadFileWithURL:url AtPath:fullPath success:successBlock error:errorBlock progress:progressBlock];
 }
 
@@ -185,7 +185,7 @@
     
     NSString *url = [self setupUploadURL];
     
-    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[VICURLFactory uploadRelativeBaseURL]];
+    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[[VICURLFactory shardFactoryHandle]  uploadRelativeBaseURL]];
     [manager.requestSerializer setValue:@"Basic d2luZToxMjM0NTY=" forHTTPHeaderField:@"Authorization"];
     [manager uploadImageData:imageData
                withURLString:url
@@ -220,7 +220,7 @@
 
     NSString *url = [self setupUploadURL];
 
-    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[VICURLFactory uploadRelativeBaseURL]];
+    VICHTTPSessionManager *manager = [[VICHTTPSessionManager alloc] initWithBaseURL:[[VICURLFactory shardFactoryHandle] uploadRelativeBaseURL]];
     [manager.requestSerializer setValue:@"Basic d2luZToxMjM0NTY=" forHTTPHeaderField:@"Authorization"];
     [manager uploadFiles:fullPaths
            withURLString:url
@@ -261,7 +261,7 @@
     }
     // 拼下载URL
     NSString *url = @"";
-    url = [url stringByAppendingString:[[VICURLFactory relativeBaseURL] absoluteString]];
+    url = [url stringByAppendingString:[[[VICURLFactory shardFactoryHandle] relativeBaseURL] absoluteString]];
     url = [url stringByAppendingPathComponent:@"api/files"];
     url = [url stringByAppendingString:@"?lang=zh&operate=GET&request_content=download&"];
     url = [url stringByAppendingFormat:@"file_name=%@",fileName];
@@ -273,7 +273,7 @@
 {
     // 拼上传URL
     NSString *url = @"";
-    url = [url stringByAppendingString:[[VICURLFactory uploadRelativeBaseURL] absoluteString]];
+    url = [url stringByAppendingString:[[[VICURLFactory shardFactoryHandle]  uploadRelativeBaseURL] absoluteString]];
     url = [url stringByAppendingPathComponent:@"ueditor/imageUpload.do"];
     return url;
 }

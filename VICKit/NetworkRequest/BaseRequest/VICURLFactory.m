@@ -7,16 +7,58 @@
 //
 
 #import "VICURLFactory.h"
+#import <objc/runtime.h>
+
+static NSString *baseURLKey = @"baseURLKey";
+static NSString *uploadBaseURLKey = @"uploadBaseURLKey";
 
 @implementation VICURLFactory
+static VICURLFactory *factoryHandle = nil;
 
++ (VICURLFactory *)shardFactoryHandle{
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (factoryHandle == nil) {
+            factoryHandle = [[self alloc] init];
+        }
+    });
+    return factoryHandle;
+    
+}
+
+
+
+
+- (NSURL *)uploadRelativeBaseURL{
+    return [NSURL URLWithString:self.uploadBaseURL];
+}
 //内网测试
-+ (NSURL *)relativeBaseURL{
-    //return [NSURL URLWithString:@"http://ecolabweb.chinacloudapp.cn:8080/ecolab_pe_api_formal_new/api.jsp"];   //测试环境
-    return [NSURL URLWithString:@"http://192.168.41.167/yangg/szfy/Su1.dat"];         //正式环境
+- (NSURL *)relativeBaseURL{
+    
+    return [NSURL URLWithString:self.baseURL];
 }
 
-+ (NSURL *)uploadRelativeBaseURL{
-    return [NSURL URLWithString:@""];
+- (void)setBaseURL:(NSString *)baseURL{
+    objc_setAssociatedObject(self, &baseURLKey, baseURL,OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (self.baseURL) {
+        [[VICURLFactory shardFactoryHandle] relativeBaseURL];
+    }
 }
+
+- (NSString *)baseURL{
+    return objc_getAssociatedObject(self, &baseURLKey);
+}
+
+- (void)setUploadBaseURL:(NSString *)uploadBaseURL{
+    objc_setAssociatedObject(self, &uploadBaseURLKey, uploadBaseURL, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (self.relativeBaseURL) {
+        [[VICURLFactory shardFactoryHandle] uploadRelativeBaseURL];
+    }
+}
+
+- (NSString *)uploadBaseURL{
+    return objc_getAssociatedObject(self, &uploadBaseURLKey);
+}
+
 @end

@@ -10,16 +10,24 @@
 
 @interface VICURLFactory : NSObject
 
+@property (strong, nonatomic) NSString *baseURL;
+@property (strong, nonatomic) NSString *uploadBaseURL;
+
+
++ (VICURLFactory *)shardFactoryHandle;
+
 /**
  *  返回URL地址
  *
  *  @return 服务端API的URL地址
  */
-+ (NSURL *)relativeBaseURL;
+- (NSURL *)relativeBaseURL;
 /**
  *  返回URL地址
  *
  *  @return 服务端上传文件的URL地址
  */
-+ (NSURL *)uploadRelativeBaseURL;
+- (NSURL *)uploadRelativeBaseURL;
+
+
 @end
