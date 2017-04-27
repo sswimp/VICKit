@@ -169,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong, nullable) dispatch_group_t completionGroup;
 #else
-@property (nonatomic, strong, nullable) dispatch_group_t completionGroup;
+@property (nonatomic, assign, nullable) dispatch_group_t completionGroup;
 #endif
 
 
